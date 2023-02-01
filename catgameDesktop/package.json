@@ -4,7 +4,7 @@
   "description": "porting catgame on desktop",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "electron ."
   },
   "author": "rokas misevicius",
   "license": "MIT",
