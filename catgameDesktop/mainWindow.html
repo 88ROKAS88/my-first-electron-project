@@ -2,8 +2,27 @@
 <html lang="en">
   <head>
     <title>The Cat Game</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <h1>The Cat Game</h1>
+    <div class="my-2">
+      <div class="myctg-border">
+        <div class="myctg-display">
+          <div class="myctg-background myctg-wrap"></div>
+          <div class="myctg-world myctg-wrap" id="myctg-world">
+            <canvas id="myctg-player"></canvas>
+            <canvas id="myctg-pigin"></canvas>
+            <!-- <div id="env-test"></div> -->
+          </div>
+        </div>
+        <div class="myctg-hud">
+          <div>Time left</div>
+          <div id="myctg-timer">300</div>
+          <div id="myctg-level-score-display"></div>
+        </div>
+      </div>
+
+      <script src="allin1.js"></script>
+    </div>
   </body>
 </html>
