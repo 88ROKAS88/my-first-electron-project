@@ -11,6 +11,10 @@ app.on("ready", function () {
     width: 1315,
     height: 620,
     useContentSize: true,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
   });
   mainWindow.loadURL(`file://${__dirname}/mainWindow.html`);
 });
@@ -19,7 +23,10 @@ const mainMenuTemplate = [
   {
     label: "File",
     submenu: [
-      { label: "New Game" },
+      {
+        label: "New Game",
+        click() {},
+      },
       {
         label: "Exit",
         accelerator: "Ctrl+Q",

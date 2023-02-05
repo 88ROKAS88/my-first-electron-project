@@ -94,8 +94,9 @@
 .myctg-wrap {
   flex-wrap: wrap;
 }
+
 .myctg-announcement {
-  padding-top: 300px;
+  padding-top: 50px;
   text-align: center;
   color: white;
   width: 100%;
@@ -103,5 +104,20 @@
   background-color: rgba(0, 0, 0, 0.6);
   font-size: 40px;
   font-weight: bold;
+  text-transform: uppercase;
+}
+
+.myctg-announcement-center {
+  padding-top: 300px;
+}
+#myctg-input {
+  font-weight: bold;
+  border-radius: 10px;
+  background: transparent;
+  font-size: 60px;
+  display: block;
+  width: 600px;
+  margin-left: 300px;
+  margin-top: 100px;
   text-transform: uppercase;
 }

@@ -1,20 +1,66 @@
+const fs = require("fs");
+
+function loadFromJson() {
+  let rawdata = fs.readFileSync("highScore.json");
+  let highScore = JSON.parse(rawdata);
+  return highScore;
+}
+function saveToJson(highScore) {
+  let data = JSON.stringify(highScore);
+  fs.writeFileSync("highScore.json", data);
+}
+
+function firstStart() {
+  player.style.display = "none";
+  piginCanvas.style.display = "none";
+  background.innerHTML = "";
+  const element = document.createElement("div");
+  element.className = "myctg-announcement";
+  element.innerText = "Enter your name and press ENTER";
+  background.appendChild(element);
+
+  const input = document.createElement("input");
+  input.setAttribute("id", "myctg-input");
+  input.value = playerName;
+
+  element.appendChild(input);
+}
+
+function showHighScore(highScore, highlight) {
+  player.style.display = "none";
+  piginCanvas.style.display = "none";
+  background.innerHTML = "";
+  const element = document.createElement("div");
+  element.className = "myctg-announcement";
+
+  element.innerText = "High Score";
+  background.appendChild(element);
+  highScore.forEach(function (row, index) {
+    const newrow = document.createElement(index == highlight ? "h1" : "h2");
+    newrow.innerText = index + 1 + ". " + row["name"] + "   " + row["score"];
+    element.appendChild(newrow);
+  });
+}
+
 function localScores() {
+  let highScore = loadFromJson();
   let data = {
-    user_id: "importId",
-    user_name: "importName",
-    lvl1: score[0]["score"],
-    lvl2: score[1]["score"],
-    lvl3: score[2]["score"],
-    overall: score[3]["score"],
+    name: playerName,
+    score: score[3]["score"],
   };
+  let currentPlayersScore = 5;
 
-  // let domain = "http://my-ca2-final.xyz"; // PRODUCTION
-  // domain = "http://localhost"; // DEVELOPEMENT
-  // let url = "/games/newscore";
+  for (let i = 0; i < highScore.length; i++) {
+    if (data["score"] > highScore[i]["score"]) {
+      highScore.splice(i, 0, data);
+      highScore.pop();
+      saveToJson(highScore);
+      currentPlayersScore = i;
+      break;
+    }
+  }
 
-  // axios.post(url, data).then(() => {
-  //     window.location.href = domain + "/games/highscore/" + score[3]["score"];
-  // });
+  showHighScore(highScore, currentPlayersScore);
 }
 
 // #### #### #    #    # #### # #### #  #
@@ -48,9 +94,7 @@ function collisionXY(varX, varY) {
       currentMap++;
       if (currentMap > 2) {
         currentMap = 0;
-        levelScoreDisplay.innerHTML = "";
         localScores();
-        startGame("you won - loading high score");
       } else {
         startGame("you won, next level " + (currentMap + 1));
       }
@@ -179,6 +223,7 @@ const allMaps = [
 // #   #  #  #  #        ####  #   #  ####  ####
 
 // VARIABLES FOR MAP
+var playerName = "Player One";
 var piginCanvas = document.getElementById("myctg-pigin");
 const background = document.querySelector(".myctg-background");
 const numberOfCubes = 66;
@@ -246,7 +291,7 @@ function announcement(message) {
   piginCanvas.style.display = "none";
   background.innerHTML = "";
   const element = document.createElement("div");
-  element.className = "myctg-announcement";
+  element.className = "myctg-announcement myctg-announcement-center";
 
   element.innerText = message;
   background.appendChild(element);
@@ -279,8 +324,7 @@ let characterPos = "l";
 let characterFall = false;
 
 // MAP
-startGame("level 1 - get ready");
-// startMap();
+firstStart();
 // GAME ENGINE
 
 const main = function () {
@@ -383,6 +427,12 @@ document.addEventListener("keydown", (event) => {
   if (event.key == " " && false == jump) {
     jump = 1;
   }
+  if (event.key == "Enter") {
+    if (document.getElementById("myctg-input")) {
+      playerName = document.querySelector("#myctg-input")?.value;
+    }
+    startGame("level 1 - get ready");
+  }
 });
 
 document.addEventListener("keyup", (event) => {
@@ -418,7 +468,6 @@ window.onload = function () {
   spriteSheet.src = "images/test5.png";
 
   function animate() {
-    // ctx.clearRect(0, 0, 100, 100);
     ctx.drawImage(
       spriteSheet,
       frame,
@@ -462,8 +511,6 @@ window.onload = function () {
       frame = 0;
     }
   }
-
-  // animate();
 
   function myFrame() {
     ctx.clearRect(0, 0, 100, 100);
