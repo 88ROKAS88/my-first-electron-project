@@ -1,6 +1,7 @@
 const electron = require("electron");
 const url = require("url");
 const path = require("path");
+const { webContents } = require("electron");
 
 const { app, BrowserWindow, Menu } = electron;
 
@@ -25,7 +26,9 @@ const mainMenuTemplate = [
     submenu: [
       {
         label: "New Game",
-        click() {},
+        click() {
+          mainWindow.webContents.send("start");
+        },
       },
       {
         label: "Exit",

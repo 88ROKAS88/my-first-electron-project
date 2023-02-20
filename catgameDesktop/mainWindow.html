@@ -21,7 +21,13 @@
           <div id="myctg-level-score-display"></div>
         </div>
       </div>
-
+      <script>
+        const electron = require("electron");
+        const { ipcRenderer } = electron;
+        ipcRenderer.on("start", function () {
+          firstStart();
+        });
+      </script>
       <script src="allin1.js"></script>
     </div>
   </body>
