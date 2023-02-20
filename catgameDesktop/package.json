@@ -4,11 +4,15 @@
   "description": "porting catgame on desktop",
   "main": "main.js",
   "scripts": {
-    "test": "electron ."
+    "test": "electron .",
+    "package-win": "electron-packager . TheCatGame --overwrite --asar=true --platform=win32 --arch=ia32 --icon=images/thecat.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"TheCatGame\""
   },
   "author": "rokas misevicius",
   "license": "MIT",
   "dependencies": {
     "electron": "^22.1.0"
+  },
+  "devDependencies": {
+    "electron-packager": "^17.1.1"
   }
 }
